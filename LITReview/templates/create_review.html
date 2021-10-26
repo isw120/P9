@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Créer une critique (pas en réponse à un ticket)</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <h1 class="jumbotron text-center">LITReview</h1>
+    <div class="container text-center">
+     <h3>Créer une critique :</h3>
+        </div>
+    <div class="row justify-content-center">
+
+         <form class="col-sm-4" method="post">
+             {% csrf_token %}
+             <h1>Livre / Article</h1>
+  <div class="form-group">
+    <label>Titre :</label>
+     {{ form.ticket_title }}
+  </div>
+  <div class="form-group">
+    <label>Description :</label>
+     {{ form.description }}
+  </div>
+             <hr>
+              <h1>Critique
+</h1>
+    <div class="form-group">
+    <label>Titre :</label>
+     {{ form.review_title }}
+    </div>
+     <div class="form-group">
+    <label>Note :</label>
+     {{ form.rating }}
+    </div>
+    <div class="form-group">
+    <label>Commentaire :</label>
+     {{ form.comments }}
+    </div>
+   <div class="form-group text-center">
+    <button type="submit" class="btn btn-primary">Envoyer</button>
+  </div>
+</form>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Flux</title>
+</head>
+<body>
+<h1>Flux</h1>
+<div class="container text-center">
+    {% for post in posts %}
+    {% if post.headline == None %}
+            <div>
+                <h1>Ticket</h1>
+                <p>{{ post.title }}</p>
+                <p>{{ post.description }}</p>
+                <p>by : {{ post.user }}</p>
+                <p>{{ post.time_created }}</p>
+            </div>
+            {% if post.is_having_a_reveiw == True %}
+                <p>Vous avez déjà critiqué ce ticket</p>
+            {% else %}
+                <form class="col-sm-4" action="{% url 'add_review' %}" method="POST">
+     {% csrf_token %}
+                    <input type="hidden" name="id" value="{{ post.id }}">
+   <div class="form-group text-center">
+    <button type="submit" class="btn btn-primary">commenter</button>
+  </div>
+</form>
+            {% endif %}
+    {% else %}
+        <div>
+            <h1>reveiw</h1>
+             <p> {{ post.ticket.id }}</p>
+             <p> {{ post.ticket.title }}</p>
+             <p> {{ post.rating }}</p>
+            <p> {{ post.headline }}</p>
+            <p> {{ post.body }}</p>
+            <p> by :{{ post.user }}</p>
+            <p>{{ post.time_created }}</p>
+            {% if post.is_having_a_reveiw == True %}
+                <p>ticket title : {{ post.ticket.title }}</p>
+                <p>ticket description : {{ post.ticket.description }}</p>
+                <p>Vous avez déjà critiqué ce ticket</p>
+            {% else %}
+                <p>ticket title : {{ post.ticket.title }}</p>
+                <p>ticket description : {{ post.ticket.description }}</p>
+                <form class="col-sm-4" action="{% url 'add_review' %}" method="POST">
+     {% csrf_token %}
+                    <input type="hidden" name="id" value="{{ post.ticket.id }}">
+   <div class="form-group text-center">
+    <button type="submit" class="btn btn-primary">commenter</button>
+  </div>
+</form>
+            {% endif %}
+       </div>
+    {% endif %}
+    {% empty %}
+    <h1>No tickets or reviews are made by you or the persons that you follow</h1>
+{% endfor %}
+
+</div>
+</body>
+</html>

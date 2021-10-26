@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Posts</title>
+</head>
+<body>
+<h1>Posts</h1>
+<div class="container text-center">
+{% for post in posts %}
+    {% if post.headline == None %}
+            <div>
+                <h1>Ticket</h1>
+                <p>{{ post.title }}</p>
+                <p>{{ post.description }}</p>
+                <p>by : {{ post.user }}</p>
+                <p>{{ post.time_created }}</p>
+                <form class="col-sm-4" action="{% url 'update_ticket' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="id" value="{{ post.id }}">
+                    <div class="form-group text-center">
+                        <button type="submit" class="btn btn-primary">Modifier</button>
+                    </div>
+                </form>
+                <form class="col-sm-4" action="{% url 'delete_ticket' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="id" value="{{ post.id }}">
+                    <div class="form-group text-center">
+                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                    </div>
+                </form>
+            </div>
+    {% else %}
+        <div>
+            <h1>reveiw</h1>
+             <p> {{ post.ticket.id }}</p>
+             <p> {{ post.ticket.title }}</p>
+            <p> {{ post.ticket.description }}</p>
+            <p> {{ post.ticket.user.username }}</p>
+             <p> {{ post.rating }}</p>
+            <p> {{ post.headline }}</p>
+            <p> {{ post.body }}</p>
+            <p> by :{{ post.user }}</p>
+            <p>{{ post.time_created }}</p>
+            <form class="col-sm-4" action="{% url 'update_review' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="ticket_id" value="{{ post.ticket.id }}">
+                <input type="hidden" name="review_id" value="{{ post.id }}">
+                <div class="form-group text-center">
+                    <button type="submit" class="btn btn-primary">Modifier</button>
+                </div>
+            </form>
+            <form class="col-sm-4" action="{% url 'delete_review' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="ticket_id" value="{{ post.ticket.id }}">
+                <input type="hidden" name="review_id" value="{{ post.id }}">
+                <div class="form-group text-center">
+                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                </div>
+            </form>
+       </div>
+    {% endif %}
+    {% empty %}
+    <h1>You didint make any review or ticket</h1>
+{% endfor %}
+</div>
+</body>
+</html>

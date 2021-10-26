@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Page de connexion</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <h1 class="jumbotron text-center">LITReview</h1>
+    <div class="container text-center">
+    <h3>Connectez-vous :</h3>
+        </div>
+    <div class="row justify-content-center">
+         <div>
+            {% for error in errors %}
+            <p>{{ error }}</p>
+            {% endfor %}
+        </div>
+         <form class="col-sm-4" method="POST">
+     {% csrf_token %}
+  <div class="form-group">
+    <label>Nom d'utilisateur :</label>
+    {{ form.username }}
+  </div>
+  <div class="form-group">
+    <label >Mot de passe :</label>
+     {{ form.password }}
+  </div>
+   <div class="form-group text-center">
+    <button type="submit" class="btn btn-primary">Se connecter</button>
+  </div>
+  <div class="form-group text-center">
+      <p>Inscrivez-vous maintenant</p>
+    <a href="/inscription" class="btn btn-primary">Aller à la page d'inscription</a>
+  </div>
+
+
+</form>
+    </div>
+</div>
+</body>
+</html>

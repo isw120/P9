@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Abonnements</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="#">LITReview</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+        aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#flux">Flux
+
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#Posts">Posts</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Abonnements">Abonnements
+                     <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<h1>{{request.user.username}}</h1>
+  <div class="container text-center">
+
+<p class="text-center">Suivre d'autres utilisateurs :</p>
+      <div>
+            {% for message in messages %}
+            <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+
+  <form class="col-sm-4" action="{% url 'follow' %}" method="POST">
+     {% csrf_token %}
+  <div class="form-group">
+    <input type="text" class="form-control" name="username" placeholder="Nom d'utilisateur" required>
+      <div class="btn-group text-center">
+  </div>
+   <div class="form-group text-center">
+   <button type="submit" class="btn btn-outline-primary">Envoyer</button>
+  </div>
+</form>
+
+<p>my_subscriptions : </p>
+
+{% if my_subscriptions %}
+    {% for user in my_subscriptions %}
+        <p>{{user.followed_user}}</p>
+        <form class="col-sm-4" action="{% url 'unfollow' %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="user_id" value="{{user.id}}">
+            <div class="form-group text-center">
+                <button type="submit" class="btn btn-danger">Désabonner</button>
+            </div>
+        </form>
+    {% endfor %}
+{% else %}
+    pas d'abonement.
+{% endif %}
+
+<p>my_subscribers : </p>
+
+{% if my_subscribers %}
+    {% for user in my_subscribers %}
+        <p>{{user.user}}</p>
+    {% endfor %}
+{% else %}
+    pas d'abonné.
+{% endif %}
+</div>
+
+ <form class="col-sm-4" action="{% url 'logout_view' %}" method="POST">
+     {% csrf_token %}
+   <div class="form-group text-center">
+    <button type="submit" class="btn btn-primary">Logout</button>
+  </div>
+</form>
+
+</body>
+</html>

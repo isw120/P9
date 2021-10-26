@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>user space</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="#">LITReview</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+        aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/flux">Flux
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/posts">Posts</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Abonnements">Abonnements</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+{% if not user.is_authenticated %}
+
+<h1>Not connected !!!</h1>
+
+{% endif %}
+
+{% if user.is_authenticated %}
+
+<h1>{{request.user.username}}</h1>
+
+{% endif %}
+
+  <div class="card-footer py-4">
+     <div style="text-align:center">
+               <a href="/create_ticket" class="btn btn-secondary">Demander une critique &raquo;</a>
+            </div>
+ <div class="card-footer py-4">
+     <div style="text-align:center">
+               <a href="/create_review" class="btn btn-secondary">Créer une critique &raquo;</a>
+            </div>
+<section class="container-fluid text-center py-4 mt-4" id="contact">
+   <h2 class="display-4 pb-4 my-4">Vous avez publié une critique!</h2>
+</section
+</body>
+</html>
