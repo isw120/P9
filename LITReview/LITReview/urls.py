@@ -21,7 +21,6 @@ urlpatterns = [
     url(r'^inscription/$', views.inscription),
     url(r'^loginMe/$', views.loginMe, name='login'),
     url(r'^logout_view/$', views.logout_view, name='logout_view'),
-    url(r'^home/$', views.home),
     url(r'^unfollow/$', views.unfollow, name='unfollow'),
     url(r'^follow/$', views.follow, name='follow'),
     url(r'^Abonnements/$', views.Abonnements),

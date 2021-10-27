@@ -3,62 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <title>Flux</title>
+    <title>home</title>
 </head>
 <body>
-<h1>Flux</h1>
-<div class="container text-center">
-    {% for post in posts %}
+
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+      <h5 class="my-0 mr-md-auto font-weight-normal">LITReview</h5>
+      <nav class="my-2 my-md-0 mr-md-3">
+          <a class="p-2 text-dark" href="/home">Flux</a>
+          <a class="p-2 text-dark" href="/posts">Posts</a>
+          <a class="p-2 text-dark" href="/Abonnements">Abonnements</a>
+          <a class="p-2 text-dark" href="/logout_view">Disconnect</a>
+      </nav>
+    </div>
+
+<section class="jumbotron text-center">
+        <div class="container">
+          <h1 class="jumbotron-heading">Flux</h1>
+             <a href="/create_ticket" class="btn btn-secondary">Demander une critique</a>
+             <a href="/create_review" class="btn btn-secondary">Créer une critique</a>
+        </div>
+      </section>
+
+ {% for post in posts %}
     {% if post.headline == None %}
-            <div>
-                <h1>Ticket</h1>
-                <p>{{ post.title }}</p>
-                <p>{{ post.description }}</p>
-                <p>by : {{ post.user }}</p>
-                <p>{{ post.time_created }}</p>
+        <hr>
+        <div class="container">
+            <div class="card">
+                {% if post.user == request.user %}
+                    <h5 class="card-header">You have created a ticket</h5>
+                {% else %}
+                    <h5 class="card-header">{{ post.user }} have created a ticket</h5>
+                {% endif %}
+                <div class="card-body">
+                    <p class="card-text float-right">{{ post.time_created }}</p>
+                    <h5 class="card-title">{{ post.title }}</h5>
+                    <p class="card-text">{{ post.description }}</p>
+                    <p class="card-text"><img src="https://images-na.ssl-images-amazon.com/images/I/41o+Dk8N2fS._SX332_BO1,204,203,200_.jpg" style="width:104px;height:142px;"></p>
+                    {% if post.is_having_a_reveiw != True %}
+                        <form class="float-right" action="{% url 'add_review' %}" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="id" value="{{ post.id }}">
+                            <button type="submit" class="btn btn-primary">commenter</button>
+                        </form>
+                    {% endif %}
+                </div>
             </div>
-            {% if post.is_having_a_reveiw == True %}
-                <p>Vous avez déjà critiqué ce ticket</p>
-            {% else %}
-                <form class="col-sm-4" action="{% url 'add_review' %}" method="POST">
-     {% csrf_token %}
-                    <input type="hidden" name="id" value="{{ post.id }}">
-   <div class="form-group text-center">
-    <button type="submit" class="btn btn-primary">commenter</button>
-  </div>
-</form>
-            {% endif %}
+        </div>
     {% else %}
-        <div>
-            <h1>reveiw</h1>
-             <p> {{ post.ticket.id }}</p>
-             <p> {{ post.ticket.title }}</p>
-             <p> {{ post.rating }}</p>
-            <p> {{ post.headline }}</p>
-            <p> {{ post.body }}</p>
-            <p> by :{{ post.user }}</p>
-            <p>{{ post.time_created }}</p>
-            {% if post.is_having_a_reveiw == True %}
-                <p>ticket title : {{ post.ticket.title }}</p>
-                <p>ticket description : {{ post.ticket.description }}</p>
-                <p>Vous avez déjà critiqué ce ticket</p>
+    <hr>
+    <div class="container">
+        <div class="card">
+            {% if post.user == request.user %}
+                <h5 class="card-header">You have created a review</h5>
             {% else %}
-                <p>ticket title : {{ post.ticket.title }}</p>
-                <p>ticket description : {{ post.ticket.description }}</p>
-                <form class="col-sm-4" action="{% url 'add_review' %}" method="POST">
-     {% csrf_token %}
-                    <input type="hidden" name="id" value="{{ post.ticket.id }}">
-   <div class="form-group text-center">
-    <button type="submit" class="btn btn-primary">commenter</button>
-  </div>
-</form>
+                <h5 class="card-header">{{ post.user }} have created a review</h5>
             {% endif %}
-       </div>
+            <div class="card-body">
+                <p class="card-text float-right">{{ post.time_created }}</p>
+                <h5 class="card-title">{{ post.headline }} - {{ post.rating }}/5</h5>
+                <p class="card-text">{{ post.body }}</p>
+                <div class="container">
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="card-text float-right">{{ post.ticket.time_created }}</p>
+                            {% if post.ticket.user == request.user %}
+                                <h5 class="card-title">Ticket - You</h5>
+                            {% else %}
+                                <h5 class="card-title">Ticket - {{ post.ticket.user }}</h5>
+                            {% endif %}
+                            <p class="card-text">{{ post.ticket.title }}</p>
+                            <p class="card-text">{{ post.ticket.description }}</p>
+                            <p class="card-text"><img src="https://images-na.ssl-images-amazon.com/images/I/41o+Dk8N2fS._SX332_BO1,204,203,200_.jpg" style="width:104px;height:142px;"></p>
+                            {% if post.is_having_a_reveiw != True %}
+                                <form class="float-right" action="{% url 'add_review' %}" method="POST">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="id" value="{{ post.ticket.id }}">
+                                    <button type="submit" class="btn btn-primary">commenter</button>
+                                </form>
+                             {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     {% endif %}
     {% empty %}
-    <h1>No tickets or reviews are made by you or the persons that you follow</h1>
+        <h1>No tickets or reviews are made by you or the persons that you follow</h1>
 {% endfor %}
-
-</div>
 </body>
 </html>

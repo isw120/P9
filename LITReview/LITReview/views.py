@@ -32,7 +32,7 @@ def inscription(request):
                 new_user = User.objects.create_user(username=username, password=password)
                 new_user.save()
                 login(request, new_user)
-                return redirect("/home")
+                return redirect("/flux")
 
         else:
             errors.append("password and confirmpassword does not match. Try again")
@@ -54,7 +54,7 @@ def loginMe(request):
         if user is not None:
             login(request, user)
             if user.is_active:
-                return redirect("/home")
+                return redirect("/flux")
             else:
                 return redirect('/loginMe')
 
@@ -63,16 +63,9 @@ def loginMe(request):
             return render(request, "loginMe.html", {'form': form, 'errors': errors})
 
     elif request.user.is_authenticated:
-        return redirect('/home')
+        return redirect('/flux')
     else:
         return render(request, 'loginMe.html', {'form': form})
-
-
-def home(request):
-    if request.user.is_authenticated:
-        return render(request, "home.html")
-    else:
-        return redirect('/loginMe')
 
 
 def logout_view(request):
@@ -140,7 +133,7 @@ def create_ticket(request):
         description = form.cleaned_data.get('description')
         new_ticket = Ticket.objects.create(title=title, description=description, user=request.user)
         new_ticket.save()
-        return redirect('/home')
+        return redirect('/flux')
 
     else:
         return render(request, "create_ticket.html", {'form': form})
@@ -160,7 +153,7 @@ def create_review(request):
         new_review = Review.objects.create(ticket=new_ticket, rating=rating, headline=review_title, body=comments,
                                            user=request.user)
         new_review.save()
-        return redirect('/home')
+        return redirect('/flux')
 
     else:
         return render(request, "create_review.html", {'form': form})

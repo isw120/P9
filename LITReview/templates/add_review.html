@@ -6,28 +6,46 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
+
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+      <h5 class="my-0 mr-md-auto font-weight-normal">LITReview</h5>
+      <nav class="my-2 my-md-0 mr-md-3">
+          <a class="p-2 text-dark" href="/flux">Flux</a>
+          <a class="p-2 text-dark" href="/posts">Posts</a>
+          <a class="p-2 text-dark" href="/Abonnements">Abonnements</a>
+          <a class="p-2 text-dark" href="/logout_view">Disconnect</a>
+      </nav>
+    </div>
+
 <div class="container">
     <h1 class="jumbotron text-center">LITReview</h1>
     <div class="container text-center">
-     <h3>Créer une critique :</h3>
+     <p>Créer une critique :</p>
         </div>
     <div class="row justify-content-center">
 
          <form class="col-sm-4" method="post">
              {% csrf_token %}
               <input type="hidden" name="ticket_id" value="{{ ticket.id }}">
-             <h1>Livre / Article</h1>
-  <div class="form-group">
-    <label>Titre :</label>
-     {{ ticket.title }}
-  </div>
-  <div class="form-group">
-    <label>Description :</label>
-     {{ ticket.description }}
-  </div>
+
+             <p>Vous êtes en train de poster en réponse à :</p>
+
+            <div class="card">
+                {% if ticket.user == request.user %}
+                    <h5 class="card-header">You have asked for a review</h5>
+                {% else %}
+                    <h5 class="card-header">{{ ticket.user }} have asked for a review</h5>
+                {% endif %}
+                <div class="card-body">
+                    <p class="card-text float-right">{{ ticket.time_created }}</p>
+                    <h5 class="card-title">{{ ticket.title }}</h5>
+                    <p class="card-text">{{ ticket.description }}</p>
+                   <p class="card-text"><img src="https://images-na.ssl-images-amazon.com/images/I/41o+Dk8N2fS._SX332_BO1,204,203,200_.jpg" style="width:104px;height:142px;"></p>
+                </div>
+            </div>
              <hr>
-              <h1>Critique
-</h1>
+              <p>Critique
+</p>
     <div class="form-group">
     <label>Titre :</label>
      {{ form.review_title }}
