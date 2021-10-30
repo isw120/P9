@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Abonnements</title>
+</head>
+<body>
+
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+    <h5 class="my-0 mr-md-auto font-weight-normal">LITReview</h5>
+    <nav class="my-2 my-md-0 mr-md-3">
+        <a class="p-2 text-dark" href="/flux">Flux</a>
+        <a class="p-2 text-dark" href="/posts">Posts</a>
+        <a class="p-2 text-dark" href="/subscriptions">Abonnements</a>
+        <a class="p-2 text-dark" href="/signout">Se déconnecter</a>
+    </nav>
+</div>
+
+<section class="jumbotron text-center">
+    <div class="container">
+        <h1 class="jumbotron-heading">Abonnements</h1>
+    </div>
+</section>
+
+<div class="container text-center">
+    <p class="text-center">Suivre d'autres utilisateurs :</p>
+    <div>
+        {% for message in messages %}
+        {% if message %}
+        <div class="alert alert-primary alert-dismissible fade show" role="alert">
+            <p>{{ message }}</p>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+
+    <form class="text-center" action="{% url 'follow' %}" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <input type="text" class="form-control" name="username" placeholder="Nom d'utilisateur" required>
+        </div>
+        <div class="form-group text-center">
+            <button type="submit" class="btn btn-secondary">Envoyer</button>
+        </div>
+    </form>
+
+    <p>Abonnements : </p>
+
+    {% if my_subscriptions %}
+    {% for user in my_subscriptions %}
+
+    <div class="card">
+        <div class="card-header">
+            <p class="card-text">{{user.followed_user}}</p>
+            <form class="float-right" action="{% url 'unfollow' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="user_id" value="{{user.id}}">
+                <button type="submit" class="btn btn-danger">Désabonner</button>
+            </form>
+        </div>
+    </div>
+
+    {% endfor %}
+    {% else %}
+    <div class="card">
+        <div class="card-header">
+            <p class="card-text">Pas d'abonement.</p>
+        </div>
+    </div>
+    {% endif %}
+
+    <p>Abonnés : </p>
+
+    {% if my_subscribers %}
+    {% for user in my_subscribers %}
+    <div class="card">
+        <div class="card-header">
+            <p class="card-text">{{user.user}}</p>
+        </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <div class="card">
+        <div class="card-header">
+            <p class="card-text">Pas d'abonné.</p>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+</html>

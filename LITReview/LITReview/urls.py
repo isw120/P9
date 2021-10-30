@@ -18,12 +18,12 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.index),
-    url(r'^inscription/$', views.inscription),
-    url(r'^loginMe/$', views.loginMe, name='login'),
-    url(r'^logout_view/$', views.logout_view, name='logout_view'),
+    url(r'^registration/$', views.registration),
+    url(r'^signin/$', views.signin, name='signin'),
+    url(r'^signout/$', views.signout, name='signout'),
     url(r'^unfollow/$', views.unfollow, name='unfollow'),
     url(r'^follow/$', views.follow, name='follow'),
-    url(r'^Abonnements/$', views.Abonnements),
+    url(r'^subscriptions/$', views.subscriptions),
     url(r'^create_ticket/$', views.create_ticket),
     url(r'^create_review/$', views.create_review),
     url(r'^flux/$', views.flux),

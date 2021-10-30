@@ -2,19 +2,19 @@ from django import forms
 
 
 class UserRegisterForm(forms.Form):
-    username = forms.CharField(max_length=30, required=True)
+    username = forms.CharField(required=True)
     username.widget.attrs['class'] = 'form-control'
     username.widget.attrs['placeholder'] = 'Nom d\'utilisateur'
     password = forms.CharField(widget=forms.PasswordInput(), required=True)
     password.widget.attrs['class'] = 'form-control'
     password.widget.attrs['placeholder'] = 'Mot de passe'
-    passwordconfirmation = forms.CharField(widget=forms.PasswordInput(), required=True)
-    passwordconfirmation.widget.attrs['class'] = 'form-control'
-    passwordconfirmation.widget.attrs['placeholder'] = 'Confirmation du mot de passe'
+    password_confirmation = forms.CharField(widget=forms.PasswordInput(), required=True)
+    password_confirmation.widget.attrs['class'] = 'form-control'
+    password_confirmation.widget.attrs['placeholder'] = 'Confirmation du mot de passe'
 
 
 class UserLoginForm(forms.Form):
-    username = forms.CharField(max_length=30, required=True)
+    username = forms.CharField(required=True)
     username.widget.attrs['class'] = 'form-control'
     username.widget.attrs['placeholder'] = 'Nom d\'utilisateur'
     password = forms.CharField(widget=forms.PasswordInput(), required=True)
@@ -31,24 +31,24 @@ class UserFollowForm(forms.Form):
 
 
 class CreateTicketForm(forms.Form):
-    title = forms.CharField(max_length=30, required=True)
+    title = forms.CharField(required=True)
     title.widget.attrs['class'] = 'form-control'
-    title.widget.attrs['placeholder'] = 'titre'
+    title.widget.attrs['placeholder'] = 'Titre'
     description = forms.CharField(widget=forms.Textarea, required=True)
     description.widget.attrs['class'] = 'form-control'
-    description.widget.attrs['placeholder'] = 'description'
+    description.widget.attrs['placeholder'] = 'Description'
 
 
 class CreateReviewForm(forms.Form):
-    ticket_title = forms.CharField(max_length=30, required=True)
+    ticket_title = forms.CharField(required=True)
     ticket_title.widget.attrs['class'] = 'form-control'
-    ticket_title.widget.attrs['placeholder'] = 'titre'
+    ticket_title.widget.attrs['placeholder'] = 'Titre'
     description = forms.CharField(widget=forms.Textarea, required=True)
     description.widget.attrs['class'] = 'form-control'
-    description.widget.attrs['placeholder'] = 'description'
-    review_title = forms.CharField(max_length=30, required=True)
+    description.widget.attrs['placeholder'] = 'Description'
+    review_title = forms.CharField(required=True)
     review_title.widget.attrs['class'] = 'form-control'
-    review_title.widget.attrs['placeholder'] = 'titre'
+    review_title.widget.attrs['placeholder'] = 'Titre'
     choices = [('1', '1'),
                ('2', '2'),
                ('3', '3'),
@@ -57,7 +57,7 @@ class CreateReviewForm(forms.Form):
     rating = forms.ChoiceField(choices=choices, widget=forms.RadioSelect)
     comments = forms.CharField(widget=forms.Textarea, required=True)
     comments.widget.attrs['class'] = 'form-control'
-    comments.widget.attrs['placeholder'] = 'comments'
+    comments.widget.attrs['placeholder'] = 'Commentaire'
 
 
 class GetIdForm(forms.Form):
@@ -66,9 +66,9 @@ class GetIdForm(forms.Form):
 
 class AddReviewForm(forms.Form):
     ticket_id = forms.CharField(required=True)
-    review_title = forms.CharField(max_length=30, required=True)
+    review_title = forms.CharField(required=True)
     review_title.widget.attrs['class'] = 'form-control'
-    review_title.widget.attrs['placeholder'] = 'titre'
+    review_title.widget.attrs['placeholder'] = 'Titre'
     choices = [('1', '1'),
                ('2', '2'),
                ('3', '3'),
@@ -77,27 +77,29 @@ class AddReviewForm(forms.Form):
     rating = forms.ChoiceField(choices=choices, widget=forms.RadioSelect)
     comments = forms.CharField(widget=forms.Textarea, required=True)
     comments.widget.attrs['class'] = 'form-control'
-    comments.widget.attrs['placeholder'] = 'comments'
+    comments.widget.attrs['placeholder'] = 'Commentaire'
 
 
 class GetReviewAndTicketIdForm(forms.Form):
     ticket_id = forms.CharField(required=True)
     review_id = forms.CharField(required=True)
 
+
 class UpdateTicketForm(forms.Form):
     ticket_id = forms.CharField(required=True)
-    title = forms.CharField(max_length=30, required=True)
+    title = forms.CharField(required=True)
     title.widget.attrs['class'] = 'form-control'
-    title.widget.attrs['placeholder'] = 'titre'
+    title.widget.attrs['placeholder'] = 'Titre'
     description = forms.CharField(widget=forms.Textarea, required=True)
     description.widget.attrs['class'] = 'form-control'
-    description.widget.attrs['placeholder'] = 'description'
+    description.widget.attrs['placeholder'] = 'Description'
+
 
 class UpdateReviewForm(forms.Form):
     review_id = forms.CharField(required=True)
-    review_title = forms.CharField(max_length=30, required=True)
+    review_title = forms.CharField(required=True)
     review_title.widget.attrs['class'] = 'form-control'
-    review_title.widget.attrs['placeholder'] = 'titre'
+    review_title.widget.attrs['placeholder'] = 'Titre'
     choices = [('1', '1'),
                ('2', '2'),
                ('3', '3'),
@@ -106,4 +108,4 @@ class UpdateReviewForm(forms.Form):
     rating = forms.ChoiceField(choices=choices, widget=forms.RadioSelect)
     comments = forms.CharField(widget=forms.Textarea, required=True)
     comments.widget.attrs['class'] = 'form-control'
-    comments.widget.attrs['placeholder'] = 'comments'
+    comments.widget.attrs['placeholder'] = 'Commentaire'
